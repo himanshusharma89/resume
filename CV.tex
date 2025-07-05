@@ -1,0 +1,366 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+% -*- coding: UTF-8; -*-
+% vim: set fenc=utf-8
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SIMPLE-RESUME-CV
+%% <https://github.com/zachscrivena/simple-resume-cv>
+%% This is free and unencumbered software released into the
+%% public domain; see <http://unlicense.org> for details.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% See "README.md" for instructions on compiling this document.
+
+\documentclass[letterpaper,MMMyyyy,nonstopmode]{simpleresumecv}
+% Class options:
+% a4paper, letterpaper, nonstopmode, draftmode
+% MMMyyyy, ddMMMyyyy, MMMMyyyy, ddMMMMyyyy, yyyyMMdd, yyyyMM, yyyy
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PREAMBLE.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% CV Info (to be customized).
+\newcommand{\CVAuthor}{Himanshu Sharma}
+\newcommand{\CVTitle}{Himanshu Sharma's CV for Google}
+\newcommand{\CVNote}{CV compiled on {\today} for Google}
+\newcommand{\CVWebpage}{https://himanshusharma.tech}
+
+% PDF settings and properties.
+\hypersetup{
+pdftitle={\CVTitle},
+pdfauthor={\CVAuthor},
+pdfsubject={\CVWebpage},
+pdfcreator={XeLaTeX},
+pdfproducer={},
+pdfkeywords={},
+unicode=true,
+bookmarks=true,
+bookmarksopen=true,
+pdfstartview=FitH,
+pdfpagelayout=OneColumn,
+pdfpagemode=UseOutlines,
+hidelinks,
+breaklinks}
+
+% Shorthand.
+\newcommand{\Code}[1]{\mbox{\textbf{#1}}}
+\newcommand{\CodeCommand}[1]{\mbox{\textbf{\textbackslash{#1}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ACTUAL DOCUMENT.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%
+% TITLE BLOCK %
+%%%%%%%%%%%%%%%
+
+\Title{\CVAuthor}
+\Gap
+\begin{SubTitle}
+\href{mailto:contact@himanshusharma.tech}
+{contact@himanshusharma.tech}
+|
+\href{tel:+919634549381}{+91\,9634549381}\
+|
+\href{\CVWebpage}{\url{himanshusharma.tech}}
+\Gap
+\href{https://linkedin.com/in/himanshusharma89}{\url{linkedin.com/in/himanshusharma89}}
+|
+\href{https://github.com/himanshusharma89}{\url{github.com/himanshusharma89}}
+|
+\href{https://stackoverflow.com/users/11545939/himanshu-sharma}{\url{stackoverflow.com/himanshu-sharma}}
+\end{SubTitle}
+
+\begin{Body}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%% WORK EXPERIENCE %%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Section
+{Work\\Experience}
+{Work Experience}
+{PDF:WorkExperience}
+
+\Entry
+\href{https://infracloud.io/}
+{\textbf{Improving}}
+\hfill Bangalore, IN
+\Gap
+DevRel Engineer
+\hfill
+\DatestampYMD{2024}{11}{25} -- Present
+\begin{Detail}
+\Gap
+\BulletItem Built MCP servers for K8s and GitHub workflows, simplifying LLM integrations for developer platforms
+\Gap
+\BulletItem
+Authored technical content on monitoring and cloud-native tools, \underline{\href{https://www.cncf.io/kubeweekly/kubeweekly-428/\#technical}{featured 2x across CNCF}}
+\Gap
+\BulletItem
+Grew InfraCloud’s open source footprint through 5+ blog posts; achieved >50$\%$ engagement rate
+%and ~2 min avg. read time
+%Built ML pipelines with Python and Kubeflow, integrating Portworx for storage
+\Gap
+\BulletItem
+Contributed to GPTScript, improving automation tooling for cloud-native AI agents%\Gap
+%\BulletItem Collaborated with engineering teams on developer enablement and participated in events to grow InfraCloud’s footprint
+\end{Detail}
+
+\BigGap
+
+\Entry
+\href{https://vymo.com}
+{\textbf{Vymo}}
+\hfill Bangalore, IN
+\Gap
+Senior Member of Technical Staff
+\hfill
+\DatestampYMD{2023}{10}{01} -- 
+\DatestampYMD{2024}{11}{22}
+\begin{Detail}
+\Gap
+\BulletItem
+Optimized SFTP importer, increasing capacity to handle 4M+ data records daily, improving efficiency and scalability
+\Gap
+\BulletItem
+Designed a cross-platform asset provider plugin prototype aimed at reducing loading times by 5x
+\Gap
+\BulletItem
+Led key initiatives for India’s top 5 banks, enhancing project execution success
+\Gap
+\BulletItem
+Developed and monitored data pipelines, ensuring efficient ETL processes at scale
+\end{Detail}
+
+\BigGap
+
+Member of Technical Staff
+\hfill
+\DatestampYMD{2022}{06}{07} -- 
+\DatestampYMD{2023}{09}{30}
+\begin{Detail}
+\Gap
+\BulletItem
+Resolved 95$\%$ production issues and crafted POCs for new solutions, improving system reliability
+\Gap
+\BulletItem
+Enhanced lead processing efficiency by 80$\%$ using Apache Airflow, optimising high-traffic data flow
+%\Gap
+%\BulletItem
+Engineered a content share feature delivering 400K+ monthly lead life-cycle updates
+\end{Detail}
+
+\BigGap
+
+Software Engineer Intern
+\hfill
+\DatestampYMD{2021}{06}{07} -- 
+\DatestampYMD{2022}{06}{06}
+\begin{Detail}
+\Gap
+\BulletItem
+Converted client requirements into innovative features for high-profile web and mobile applications
+\Gap
+\BulletItem
+Optimized search queries in ElasticSearch and MongoDB, decreasing average response times by 63$\%$
+\end{Detail}
+
+
+%%%%%%%%%%%%%%%
+%% EDUCATION %%
+%%%%%%%%%%%%%%%
+
+\Section
+{Education}
+{Education}
+{PDF:Education}
+
+\Entry
+\href{https://www.chitkara.edu.in/engineering/colleges-punjab-chandigarh}
+{\textbf{Chitkara University}},
+\hfill Patiala, IN
+\Gap
+Bachelor of Engineering in
+\href{https://www.chitkara.edu.in/cse/}
+{Computer Science and Engineering}
+\hfill
+\DatestampYMD{2018}{08}{15} --
+\DatestampYMD{2022}{07}{15}
+\Gap
+\begin{Detail}
+Cumulative GPA: 9.92 / 10.00
+\end{Detail}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+    %% PROJECTS %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\Section
+{Projects}
+{Projects}
+{PDF:Projects}
+\Entry
+\href{https://aortem.io}
+{\textbf{Aortem}}
+$|$ \emph{Flutter, Dart, Go, K8s}
+\hfill
+\DatestampYMD{2024}{10}{01} -- Present
+
+\begin{Detail}
+\Gap
+\BulletItem
+Built Kubernetes client in Dart using OpenAPI v2 specs
+\BulletItem
+Developed private Dart package distribution server, hosted on GCP with token-based access and GCS storage
+\end{Detail}
+
+\BigGap
+
+\Entry
+\href{https://aortem.io}
+{\textbf{Aortem}}
+$|$ \emph{Flutter, Dart, Go, K8s}
+\hfill
+\DatestampYMD{2024}{10}{01} -- Present
+
+\begin{Detail}
+\Gap
+\BulletItem
+Built Kubernetes client in Dart using OpenAPI v2 specs
+\BulletItem
+Developed private Dart package distribution server, hosted on GCP with token-based access and GCS storage
+\end{Detail}
+
+\BigGap
+
+\Entry
+\href{https://github.com/ishandeveloper/Swaasthy}
+{\textbf{Swasthy}}
+$|$ \emph{Flutter, Android Studio, Firebase, ML Kit, REST APIs}
+\hfill
+\DatestampYMD{2021}{03}{01}
+
+\begin{Detail}
+\Gap
+\BulletItem
+Achieved \underline{\href{https://developers.googleblog.com/en/meet-the-students-coding-their-way-to-a-better-world/}{Global Top 10}} in Google Solution Challenge 2021 for building an emergency healthcare app
+\end{Detail}
+
+\BigGap
+
+\Entry
+\href{https://github.com/ishandeveloper/github-wrapped}
+{\textbf{GitHub Wrapped}}
+$|$ \emph{JavaScript, React, GraphQL, Heroku}
+\hfill
+\DatestampYMD{2020}{12}{01}
+
+\begin{Detail}
+\Gap
+\BulletItem
+Attracted 15M+ visits for a web app visualizing annual GitHub contributions; enabled 2K+ automated social shares
+\end{Detail}
+
+% \BigGap
+
+% \Entry
+% \href{https://github.com/himanshusharma89/relic_bazaar}
+% {\textbf{Relic Bazaar}}
+% $|$ \emph{Flutter, Node.js, Firebase, REST APIs, Heroku}
+% \hfill
+% \DatestampYMD{2020}{06}{01}
+
+% \begin{Detail}
+% \Gap
+% \BulletItem
+% Ranked in \underline{\href{https://flutterhackathon.com/#/projects/7fe67560-b847-11ea-ab14-c3ec03ea30f0}{Global Top 60}} out of 250 submissions in Hack20 Flutter International Hackathon with retro theme-based e-commerce app for antiques
+% \end{Detail}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COMMUNITY & LEADERSHIP %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Section
+{Technical\\Skills}
+{Technical Skills}
+{PDF:TechnicalSkills}
+
+\textbf{Languages / Databases}: Python, JavaScript, Dart, Java, Bash, SQL, MongoDB, Elasticsearch
+
+\Gap
+
+\textbf{Developer Tools}: VS Code, WebStorm, Docker, GitHub Actions, Jenkins, AWS Amplify, GKE 
+
+\Gap
+
+\textbf{Technologies / Frameworks}:  Linux, Git, Kubernetes, Node.js, Apache Kafka, Apache Airflow, REST, SOAP, OpenAPI, Microservices 
+
+\Gap
+
+\textbf{Additional Skills}: Technical Writing, Developer Advocacy, CI/CD, OSS Contributions, API Design
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COMMUNITY & LEADERSHIP %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Section
+{Community \&\newline
+Leadership}
+{Community \& Leadership}
+{PDF:CommunityAndLeadership}
+
+% \href{https://dartcodelabs.com/author/himanshu/}{Aortem}
+% \hfill
+% \DatestampYM{2024}{10} -- Present
+% \Gap
+% \begin{Detail}
+% Freelance Developer Advocate
+% \end{Detail}
+
+\Gap
+\href{https://blog.logrocket.com/author/himanshusharma/}{LogRocket}
+\hfill
+\DatestampYM{2021}{10} --
+\DatestampYM{2022}{11}
+\Gap
+\begin{Detail}
+Freelance Technical Writer
+\end{Detail}
+
+\Gap
+\href{https://flutterindia.dev/}{Flutter India}
+\hfill
+\DatestampYM{2021}{02} -- Present
+\Gap
+\begin{Detail}
+Organiser
+\end{Detail}
+
+\Gap
+\href{https://medium.com/@himanshusharma89}{Flutter Community}
+\hfill
+\DatestampYM{2020}{03} -- Present
+\Gap
+\begin{Detail}
+Generated \href{https://medium.com/@himanshusharma89}{\underline{250K+ views}} on stories authored for Flutter Community Medium publication
+\end{Detail}
+
+\end{Body}
+
+% %%%%%%%%%%%
+% % CV NOTE %
+% %%%%%%%%%%%
+
+% \UseNoteFont%
+% \null\hfill%
+% [\textit{\CVNote}]
+
+\end{document}

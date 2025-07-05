@@ -1,0 +1,112 @@
+name: Build and Deploy Resume
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup TeX Live
+      uses: xu-cheng/latex-action@v3
+      with:
+        root_file: CV.tex
+        latexmk_use_xelatex: true
+        work_in_root_file_dir: true
+        latexmk_args: -pdf -xelatex -interaction=nonstopmode
+        
+    - name: Upload PDF artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: resume-pdf
+        path: CV.pdf
+        
+    - name: Create deployment files
+      run: |
+        # Create a simple HTML page that serves the PDF
+        cat > index.html << 'EOF'
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Himanshu Sharma - Resume</title>
+            <style>
+                body {
+                    margin: 0;
+                    padding: 20px;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    background: #f5f5f5;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                }
+                .container {
+                    background: white;
+                    padding: 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    text-align: center;
+                    max-width: 500px;
+                }
+                h1 {
+                    color: #333;
+                    margin-bottom: 20px;
+                }
+                .download-btn {
+                    display: inline-block;
+                    background: #007bff;
+                    color: white;
+                    padding: 12px 24px;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    font-weight: 500;
+                    transition: background 0.3s;
+                }
+                .download-btn:hover {
+                    background: #0056b3;
+                }
+                .info {
+                    margin-top: 20px;
+                    color: #666;
+                    font-size: 14px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Himanshu Sharma</h1>
+                <p>Software Engineer & DevRel Engineer</p>
+                <a href="CV.pdf" class="download-btn" download>Download Resume (PDF)</a>
+                <div class="info">
+                    <p>Last updated: <span id="last-updated"></span></p>
+                    <p><a href="https://himanshusharma.tech">himanshusharma.tech</a></p>
+                </div>
+            </div>
+            <script>
+                document.getElementById('last-updated').textContent = new Date().toLocaleDateString();
+            </script>
+        </body>
+        </html>
+        EOF
+        
+        # Copy the built PDF to the root directory for deployment
+        cp CV.pdf .
+        
+    - name: Deploy to Cloudflare Pages
+      uses: cloudflare/pages-action@v1
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        projectName: resume
+        directory: .
+        gitHubToken: ${{ secrets.GITHUB_TOKEN }} 
