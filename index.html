@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-    <meta name="description" content="Resume | Himanshu Shrama">
+    <meta name="description" content="Resume | Himanshu Sharma">
 
     <!-- iOS meta tags & icons -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,14 +16,100 @@
     <link rel="shortcut icon" type="image/png" href="favicon.ico" />
     <title>Resume | Himanshu Sharma</title>
     <link rel="manifest" href="manifest.json">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #pdf-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        #pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .fallback-message {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .fallback-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .fallback-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
-<body style="width:100%; height:100%; margin:0;">
-    <div id="any" style="width:100%; height:100%; margin:0;"> </div>
+<body>
+    <div id="pdf-container">
+        <iframe id="pdf-viewer" src="Himanshu_Resume.pdf#toolbar=1&navpanes=1&scrollbar=1"></iframe>
+        <div id="fallback-message" class="fallback-message">
+            <h2>PDF Viewer Not Available</h2>
+            <p>Your browser doesn't support PDF viewing. Please download the resume to view it.</p>
+            <a href="Himanshu_Resume.pdf" class="fallback-link" download>Download Resume</a>
+        </div>
+    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.5/pdfobject.min.js"></script>
     <script>
-        PDFObject.embed("https://github.com/himanshusharma89/resume/raw/master/Himanshu_Resume.pdf", "#any");
+        // Check if PDF is supported and handle fallback
+        function checkPDFSupport() {
+            const iframe = document.getElementById('pdf-viewer');
+            const fallback = document.getElementById('fallback-message');
+            
+            // Check if the iframe loaded successfully
+            iframe.onload = function() {
+                try {
+                    // Try to access iframe content - if it fails, show fallback
+                    if (iframe.contentWindow.location.href) {
+                        // PDF loaded successfully
+                        fallback.style.display = 'none';
+                    }
+                } catch (e) {
+                    // Cross-origin error or PDF not supported
+                    showFallback();
+                }
+            };
+            
+            iframe.onerror = function() {
+                showFallback();
+            };
+            
+            // Fallback for browsers that don't support PDF viewing
+            setTimeout(function() {
+                if (iframe.contentWindow.location.href === 'about:blank') {
+                    showFallback();
+                }
+            }, 2000);
+        }
+        
+        function showFallback() {
+            document.getElementById('pdf-viewer').style.display = 'none';
+            document.getElementById('fallback-message').style.display = 'block';
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('load', checkPDFSupport);
     </script>
 </body>
 
