@@ -19,136 +19,233 @@ jobs:
         root_file: CV.tex
         latexmk_use_xelatex: true
         
-
+    - name: Create favicon.svg
+      run: |
+        cat > favicon.svg << 'EOF'
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+          <rect width="100" height="100" rx="10" fill="#2563eb"/>
+          <text x="50" y="65" font-family="Arial, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" fill="white">HS</text>
+        </svg>
+        EOF
+        
+    - name: Create manifest.json
+      run: |
+        cat > manifest.json << 'EOF'
+        {
+          "name": "Himanshu Sharma - Resume",
+          "short_name": "Resume",
+          "description": "Himanshu Sharma's professional resume",
+          "start_url": "/",
+          "display": "standalone",
+          "background_color": "#ffffff",
+          "theme_color": "#2563eb",
+          "icons": [
+            {
+              "src": "favicon.svg",
+              "sizes": "any",
+              "type": "image/svg+xml"
+            }
+          ]
+        }
+        EOF
         
     - name: Create index.html
       run: |
         cat > index.html << 'EOF'
         <!DOCTYPE html>
-        <html lang="en" style="width:100%; height:100%;">
+        <html lang="en">
         <head>
             <meta charset="UTF-8">
-            <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-            <meta name="description" content="Resume | Himanshu Sharma">
-
-            <!-- iOS meta tags & icons -->
-            <meta name="apple-mobile-web-app-capable" content="yes">
-            <meta name="apple-mobile-web-app-status-bar-style" content="black">
-            <meta name="apple-mobile-web-app-title" content="My Resume">
-            <link rel="apple-touch-icon" href="./favicon.svg">
-
-            <!-- Favicon -->
-            <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-            <link rel="alternate icon" href="./favicon.ico" />
-            <title>Resume | Himanshu Sharma</title>
-            <link rel="manifest" href="./manifest.json">
-            
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Himanshu Sharma - Resume</title>
+            <link rel="icon" type="image/svg+xml" href="favicon.svg">
+            <link rel="manifest" href="manifest.json">
             <style>
-                body {
+                * {
                     margin: 0;
                     padding: 0;
-                    width: 100%;
-                    height: 100vh;
-                    overflow: hidden;
+                    box-sizing: border-box;
                 }
-                #pdf-container {
-                    width: 100%;
-                    height: 100%;
-                    position: relative;
+                
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    background-color: #f8fafc;
+                    color: #1e293b;
+                    line-height: 1.6;
                 }
-                #pdf-viewer {
-                    width: 100%;
-                    height: 100%;
-                    border: none;
+                
+                .container {
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 20px;
                 }
-                .fallback-message {
-                    display: none;
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
+                
+                .header {
                     text-align: center;
-                    font-family: Arial, sans-serif;
-                    color: #333;
+                    margin-bottom: 30px;
+                    padding: 40px 0;
+                    background: white;
+                    border-radius: 8px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
                 }
-                .fallback-link {
-                    display: inline-block;
-                    margin-top: 20px;
-                    padding: 10px 20px;
-                    background-color: #007bff;
-                    color: white;
+                
+                .header h1 {
+                    font-size: 2.5rem;
+                    font-weight: 700;
+                    color: #2563eb;
+                    margin-bottom: 10px;
+                }
+                
+                .header p {
+                    font-size: 1.2rem;
+                    color: #64748b;
+                    margin-bottom: 20px;
+                }
+                
+                .links {
+                    display: flex;
+                    justify-content: center;
+                    gap: 20px;
+                    flex-wrap: wrap;
+                }
+                
+                .links a {
+                    color: #2563eb;
                     text-decoration: none;
-                    border-radius: 5px;
-                    font-weight: bold;
+                    padding: 8px 16px;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 6px;
+                    transition: all 0.2s;
                 }
-                .fallback-link:hover {
-                    background-color: #0056b3;
+                
+                .links a:hover {
+                    background-color: #2563eb;
+                    color: white;
+                }
+                
+                .resume-section {
+                    background: white;
+                    border-radius: 8px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                    padding: 30px;
+                    margin-bottom: 20px;
+                }
+                
+                .download-btn {
+                    display: inline-block;
+                    background: #2563eb;
+                    color: white;
+                    padding: 12px 24px;
+                    border-radius: 6px;
+                    text-decoration: none;
+                    font-weight: 500;
+                    margin-bottom: 20px;
+                    transition: background-color 0.2s;
+                }
+                
+                .download-btn:hover {
+                    background: #1d4ed8;
+                }
+                
+                .pdf-viewer {
+                    width: 100%;
+                    height: 600px;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 6px;
+                }
+                
+                .footer {
+                    text-align: center;
+                    margin-top: 30px;
+                    padding: 20px;
+                    color: #64748b;
+                    font-size: 0.9rem;
+                }
+                
+                @media (max-width: 768px) {
+                    .container {
+                        padding: 10px;
+                    }
+                    
+                    .header h1 {
+                        font-size: 2rem;
+                    }
+                    
+                    .header p {
+                        font-size: 1rem;
+                    }
+                    
+                    .links {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                    
+                    .pdf-viewer {
+                        height: 500px;
+                    }
                 }
             </style>
         </head>
         <body>
-            <div id="pdf-container">
-                <iframe id="pdf-viewer" src="./Himanshu_Resume.pdf#toolbar=1&navpanes=1&scrollbar=1"></iframe>
-                <div id="fallback-message" class="fallback-message">
-                    <h2>PDF Viewer Not Available</h2>
-                    <p>Your browser doesn't support PDF viewing. Please download the resume to view it.</p>
-                    <a href="./Himanshu_Resume.pdf" class="fallback-link" download>Download Resume</a>
+            <div class="container">
+                <div class="header">
+                    <h1>Himanshu Sharma</h1>
+                    <p>Software Engineer & DevRel Engineer</p>
+                    <div class="links">
+                        <a href="https://linkedin.com/in/himanshusharma89" target="_blank">LinkedIn</a>
+                        <a href="https://github.com/himanshusharma89" target="_blank">GitHub</a>
+                        <a href="https://stackoverflow.com/users/11545939/himanshu-sharma" target="_blank">Stack Overflow</a>
+                        <a href="mailto:contact@himanshusharma.tech">Email</a>
+                    </div>
+                </div>
+                
+                <div class="resume-section">
+                    <a href="Himanshu_Resume.pdf" class="download-btn" download>
+                        📄 Download Resume (PDF)
+                    </a>
+                    <iframe 
+                        src="Himanshu_Resume.pdf" 
+                        class="pdf-viewer"
+                        title="Himanshu Sharma Resume">
+                    </iframe>
+                </div>
+                
+                <div class="footer">
+                    <p>Last updated: $(date '+%B %d, %Y')</p>
                 </div>
             </div>
-
-            <script>
-                // Check if PDF is supported and handle fallback
-                function checkPDFSupport() {
-                    const iframe = document.getElementById('pdf-viewer');
-                    const fallback = document.getElementById('fallback-message');
-                    
-                    // Check if the iframe loaded successfully
-                    iframe.onload = function() {
-                        try {
-                            // Try to access iframe content - if it fails, show fallback
-                            if (iframe.contentWindow.location.href) {
-                                // PDF loaded successfully
-                                fallback.style.display = 'none';
-                            }
-                        } catch (e) {
-                            // Cross-origin error or PDF not supported
-                            showFallback();
-                        }
-                    };
-                    
-                    iframe.onerror = function() {
-                        showFallback();
-                    };
-                    
-                    // Fallback for browsers that don't support PDF viewing
-                    setTimeout(function() {
-                        if (iframe.contentWindow.location.href === 'about:blank') {
-                            showFallback();
-                        }
-                    }, 2000);
-                }
-                
-                function showFallback() {
-                    document.getElementById('pdf-viewer').style.display = 'none';
-                    document.getElementById('fallback-message').style.display = 'block';
-                }
-                
-                // Initialize when page loads
-                window.addEventListener('load', checkPDFSupport);
-            </script>
         </body>
         </html>
         EOF
         
-
+    - name: Create _headers file
+      run: |
+        cat > _headers << 'EOF'
+        /*
+          X-Frame-Options: SAMEORIGIN
+          X-Content-Type-Options: nosniff
+          Referrer-Policy: strict-origin-when-cross-origin
+          
+        /Himanshu_Resume.pdf
+          Cache-Control: public, max-age=3600
+          
+        /index.html
+          Cache-Control: public, max-age=300
+        EOF
+        
+    - name: Create _redirects file
+      run: |
+        cat > _redirects << 'EOF'
+        /cv /Himanshu_Resume.pdf 301
+        /resume /Himanshu_Resume.pdf 301
+        EOF
         
     - name: Rename PDF
       run: cp CV.pdf Himanshu_Resume.pdf
         
-    - name: Commit and push changes
+    - name: Deploy files
       run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git add .
-        git commit -m "Auto-update resume [skip ci]"
-        git push 
+        echo "Files ready for deployment:"
+        ls -la
+        echo "PDF file size:"
+        ls -lh Himanshu_Resume.pdf
