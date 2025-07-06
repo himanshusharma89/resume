@@ -35,12 +35,10 @@ The workflow will automatically run when you push to the main branch.
 
 ### Features Included:
 
-- ✅ **PWA Support**: Progressive Web App with manifest.json and service worker
-- ✅ **SEO Optimized**: Meta tags, Open Graph, and Twitter cards
+- ✅ **Simple & Clean**: Minimal, professional design
+- ✅ **PDF Viewer**: Direct PDF viewing in browser
+- ✅ **Download Link**: Easy PDF download
 - ✅ **Responsive Design**: Works on all devices
-- ✅ **Security Headers**: Proper security configuration
-- ✅ **Caching**: Optimized caching for better performance
-- ✅ **Social Links**: Direct links to your professional profiles
 - ✅ **Automatic Updates**: Every push triggers a new build and deploy
 
 ## 📝 Usage
@@ -82,12 +80,7 @@ xelatex CV.tex
 ├── simpleresumecv.cls        # Custom LaTeX class
 ├── Fonts/                    # Font files
 ├── .github/workflows/        # GitHub Actions workflow
-├── _headers                  # Cloudflare Pages security headers
-├── _redirects                # Cloudflare Pages redirects
-├── manifest.json             # PWA manifest (auto-generated)
-├── favicon.svg               # Custom favicon (auto-generated)
 ├── index.html                # Main HTML page (auto-generated)
-├── sw.js                     # Service worker (auto-generated)
 └── README.md                 # This file
 ```
 
