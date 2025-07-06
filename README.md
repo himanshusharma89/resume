@@ -1,46 +1,101 @@
-simple-resume-cv
-================
+# Himanshu Sharma - Resume
 
-Template for a simple resume or curriculum vitae (CV), in XeLaTeX.
+This repository contains the LaTeX source for my resume with automated deployment to Cloudflare Pages.
 
-**Compiled sample document:**<br>
-[CV.pdf](https://raw.githubusercontent.com/zachscrivena/simple-resume-cv/master/CV.pdf)
+## 🚀 Automated Deployment Setup
 
-**Sample pages (click to enlarge):**
+This repository is configured with GitHub Actions to automatically build and deploy your resume to Cloudflare Pages whenever you push changes to the main branch.
 
-<img height="500" src="https://raw.githubusercontent.com/zachscrivena/simple-resume-cv/master/Miscellaneous/CV-01.png" alt="CV-01">
-<img height="500" src="https://raw.githubusercontent.com/zachscrivena/simple-resume-cv/master/Miscellaneous/CV-02.png" alt="CV-02">
-<img height="500" src="https://raw.githubusercontent.com/zachscrivena/simple-resume-cv/master/Miscellaneous/CV-03.png" alt="CV-03">
+### How it works:
 
-## Main Features
+1. **Single Repository**: Contains both LaTeX source files and deploys to Cloudflare Pages
+2. **GitHub Actions**: Automatically builds PDF and deploys on every push
+3. **Cloudflare Pages**: Serves the resume at `https://himanshusharma.tech`
 
-- Simple template that can be further customized or extended.
-- Template document contains numerous examples.
-- Direct support for TrueType (TTF) and OpenType (OTF) fonts.
-- Direct support for multilingual Unicode characters, with the appropriate fonts.
-- Hyperlinks can be included in generated PDF.
+### Setup Instructions:
 
-## Overview
+#### 1. Connect to Cloudflare Pages
+1. Go to [Cloudflare Pages](https://pages.cloudflare.com/)
+2. Click "Create a project"
+3. Connect your GitHub repository
+4. Set build settings:
+   - **Build command**: Leave empty (GitHub Actions handles building)
+   - **Build output directory**: Leave empty
+   - **Root directory**: Leave empty
+5. Click "Save and Deploy"
 
-The main XeLaTeX source file is `CV.tex`; the compiled document is `CV.pdf`.
+#### 2. Configure Custom Domain (Optional)
+1. In your Cloudflare Pages project settings
+2. Go to "Custom domains"
+3. Add your domain (e.g., `himanshusharma.tech`)
+4. Update DNS records as instructed
 
-Instructions for compiling the document (TeX &rarr;(XeLaTeX)&rarr; PDF):
+#### 3. Push your changes
+The workflow will automatically run when you push to the main branch.
 
-- **Method 1:** Use `latexmk` for fully automated document generation:
-	- `latexmk -xelatex "CV.tex"`
-	(add the `-pvc` switch to automatically recompile on changes)
+### Features Included:
 
-- **Method 2:** Use `XeLaTeX` directly:
-	- `xelatex "CV.tex"`
-	(run multiple times to resolve cross-references if needed)
+- ✅ **PWA Support**: Progressive Web App with manifest.json and service worker
+- ✅ **SEO Optimized**: Meta tags, Open Graph, and Twitter cards
+- ✅ **Responsive Design**: Works on all devices
+- ✅ **Security Headers**: Proper security configuration
+- ✅ **Caching**: Optimized caching for better performance
+- ✅ **Social Links**: Direct links to your professional profiles
+- ✅ **Automatic Updates**: Every push triggers a new build and deploy
 
-## License
+## 📝 Usage
 
-This is free and unencumbered software released into the public domain.
-For more information, please see the file `LICENSE` or refer to <http://unlicense.org>.
+### To update your resume:
 
-## Recent Changes
+1. **Edit the LaTeX source** (`CV.tex`)
+2. **Commit and push** to the main branch
+3. **GitHub Actions will automatically**:
+   - Build the PDF using XeLaTeX
+   - Create all necessary files (HTML, manifest, favicon, etc.)
+   - Deploy it to Cloudflare Pages
+   - Update the live website
 
-- Release v3.0
-	- Provides better support for other packages (e.g., biblatex) by removing the use of the longtable package for layout.
-	- Note that this release introduces breaking changes; documents created using earlier releases of this template will need some minor changes to compile successfully.
+### Manual trigger:
+
+You can also manually trigger the workflow by:
+1. Going to the Actions tab in this repository
+2. Selecting "Build and Deploy Resume"
+3. Clicking "Run workflow"
+
+## 🛠️ Local Development
+
+To build the resume locally:
+
+```bash
+# Install XeLaTeX (if not already installed)
+# On macOS: brew install --cask mactex
+# On Ubuntu: sudo apt-get install texlive-xetex
+
+# Build the PDF
+xelatex CV.tex
+```
+
+## 📁 File Structure
+
+```
+├── CV.tex                    # Main LaTeX source file
+├── simpleresumecv.cls        # Custom LaTeX class
+├── Fonts/                    # Font files
+├── .github/workflows/        # GitHub Actions workflow
+├── _headers                  # Cloudflare Pages security headers
+├── _redirects                # Cloudflare Pages redirects
+├── manifest.json             # PWA manifest (auto-generated)
+├── favicon.svg               # Custom favicon (auto-generated)
+├── index.html                # Main HTML page (auto-generated)
+├── sw.js                     # Service worker (auto-generated)
+└── README.md                 # This file
+```
+
+## 🔗 Links
+
+- **Live Resume**: [himanshusharma.tech](https://himanshusharma.tech)
+- **Repository**: [himanshusharma89/Himanshu_Resume](https://github.com/himanshusharma89/Himanshu_Resume)
+
+## 📄 License
+
+This project is based on the [Simple Resume CV](https://github.com/zachscrivena/simple-resume-cv) template, which is released into the public domain.

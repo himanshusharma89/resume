@@ -1,0 +1,456 @@
+name: Build and Deploy Resume
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup LaTeX
+      uses: xu-cheng/latex-action@v3
+      with:
+        root_file: CV.tex
+        latexmk_use_xelatex: true
+        
+    - name: Create manifest.json
+      run: |
+        cat > manifest.json << 'EOF'
+        {
+          "name": "Himanshu Sharma - Resume",
+          "short_name": "Himanshu Resume",
+          "description": "Himanshu Sharma's professional resume and CV",
+          "start_url": "/",
+          "display": "standalone",
+          "background_color": "#f5f5f5",
+          "theme_color": "#667eea",
+          "icons": [
+            {
+              "src": "favicon.svg",
+              "sizes": "any",
+              "type": "image/svg+xml"
+            }
+          ]
+        }
+        EOF
+        
+    - name: Create favicon.svg
+      run: |
+        cat > favicon.svg << 'EOF'
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="20" fill="url(#grad)"/>
+          <text x="50" y="65" font-family="Arial, sans-serif" font-size="40" font-weight="bold" text-anchor="middle" fill="white">HS</text>
+        </svg>
+        EOF
+        
+    - name: Create index.html
+      run: |
+        cat > index.html << 'EOF'
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="description" content="Himanshu Sharma - Software Engineer & DevRel Engineer. View my professional resume and experience.">
+            <meta name="keywords" content="Himanshu Sharma, Software Engineer, DevRel Engineer, Resume, CV, Portfolio">
+            <meta name="author" content="Himanshu Sharma">
+            
+            <!-- Open Graph / Facebook -->
+            <meta property="og:type" content="website">
+            <meta property="og:url" content="https://himanshusharma.tech/">
+            <meta property="og:title" content="Himanshu Sharma - Resume">
+            <meta property="og:description" content="Software Engineer & DevRel Engineer">
+            <meta property="og:image" content="https://himanshusharma.tech/og-image.png">
+
+            <!-- Twitter -->
+            <meta property="twitter:card" content="summary_large_image">
+            <meta property="twitter:url" content="https://himanshusharma.tech/">
+            <meta property="twitter:title" content="Himanshu Sharma - Resume">
+            <meta property="twitter:description" content="Software Engineer & DevRel Engineer">
+            <meta property="twitter:image" content="https://himanshusharma.tech/og-image.png">
+            
+            <title>Himanshu Sharma - Resume</title>
+            <link rel="icon" type="image/svg+xml" href="favicon.svg">
+            <link rel="manifest" href="manifest.json">
+            <link rel="canonical" href="https://himanshusharma.tech/">
+            
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    min-height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 20px;
+                }
+                
+                .container {
+                    max-width: 900px;
+                    width: 100%;
+                    background: white;
+                    border-radius: 16px;
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+                    overflow: hidden;
+                    animation: slideUp 0.6s ease-out;
+                }
+                
+                @keyframes slideUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                
+                .header {
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 40px 30px;
+                    text-align: center;
+                    position: relative;
+                    overflow: hidden;
+                }
+                
+                .header::before {
+                    content: '';
+                    position: absolute;
+                    top: -50%;
+                    left: -50%;
+                    width: 200%;
+                    height: 200%;
+                    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+                    animation: rotate 20s linear infinite;
+                }
+                
+                @keyframes rotate {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                
+                .header-content {
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                .header h1 {
+                    margin: 0;
+                    font-size: 3em;
+                    font-weight: 300;
+                    letter-spacing: -1px;
+                }
+                
+                .header p {
+                    margin: 15px 0 0 0;
+                    opacity: 0.9;
+                    font-size: 1.2em;
+                    font-weight: 300;
+                }
+                
+                .social-links {
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: center;
+                    gap: 15px;
+                    flex-wrap: wrap;
+                }
+                
+                .social-link {
+                    color: white;
+                    text-decoration: none;
+                    padding: 8px 16px;
+                    border: 1px solid rgba(255,255,255,0.3);
+                    border-radius: 20px;
+                    font-size: 0.9em;
+                    transition: all 0.3s ease;
+                }
+                
+                .social-link:hover {
+                    background: rgba(255,255,255,0.1);
+                    transform: translateY(-2px);
+                }
+                
+                .content {
+                    padding: 40px 30px;
+                }
+                
+                .download-section {
+                    text-align: center;
+                    margin-bottom: 30px;
+                }
+                
+                .download-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 10px;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 16px 32px;
+                    text-decoration: none;
+                    border-radius: 30px;
+                    font-weight: 500;
+                    font-size: 1.1em;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+                }
+                
+                .download-btn:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+                }
+                
+                .pdf-viewer {
+                    width: 100%;
+                    height: 700px;
+                    border: none;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                    background: #f8f9fa;
+                }
+                
+                .last-updated {
+                    text-align: center;
+                    color: #666;
+                    margin-top: 30px;
+                    font-size: 0.9em;
+                    padding: 20px;
+                    border-top: 1px solid #eee;
+                }
+                
+                .loading {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 200px;
+                    color: #666;
+                }
+                
+                .spinner {
+                    border: 3px solid #f3f3f3;
+                    border-top: 3px solid #667eea;
+                    border-radius: 50%;
+                    width: 30px;
+                    height: 30px;
+                    animation: spin 1s linear infinite;
+                    margin-right: 15px;
+                }
+                
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+                
+                @media (max-width: 768px) {
+                    .header h1 {
+                        font-size: 2.2em;
+                    }
+                    
+                    .header p {
+                        font-size: 1em;
+                    }
+                    
+                    .content {
+                        padding: 30px 20px;
+                    }
+                    
+                    .pdf-viewer {
+                        height: 500px;
+                    }
+                    
+                    .social-links {
+                        gap: 10px;
+                    }
+                    
+                    .social-link {
+                        padding: 6px 12px;
+                        font-size: 0.8em;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <div class="header-content">
+                        <h1>Himanshu Sharma</h1>
+                        <p>Software Engineer & DevRel Engineer</p>
+                        <div class="social-links">
+                            <a href="https://linkedin.com/in/himanshusharma89" class="social-link" target="_blank" rel="noopener">LinkedIn</a>
+                            <a href="https://github.com/himanshusharma89" class="social-link" target="_blank" rel="noopener">GitHub</a>
+                            <a href="https://stackoverflow.com/users/11545939/himanshu-sharma" class="social-link" target="_blank" rel="noopener">Stack Overflow</a>
+                            <a href="mailto:contact@himanshusharma.tech" class="social-link">Email</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content">
+                    <div class="download-section">
+                        <a href="Himanshu_Resume.pdf" class="download-btn" download>
+                            📄 Download Resume (PDF)
+                        </a>
+                    </div>
+                    
+                    <div id="pdf-container">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            Loading resume...
+                        </div>
+                    </div>
+                    
+                    <div class="last-updated">
+                        Last updated: $(date '+%B %d, %Y at %I:%M %p UTC')
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                // Load PDF with fallback
+                window.addEventListener('load', function() {
+                    const container = document.getElementById('pdf-container');
+                    const pdfUrl = 'Himanshu_Resume.pdf';
+                    
+                    // Check if PDF is accessible
+                    fetch(pdfUrl, { method: 'HEAD' })
+                        .then(response => {
+                            if (response.ok) {
+                                container.innerHTML = `
+                                    <iframe 
+                                        src="${pdfUrl}" 
+                                        class="pdf-viewer"
+                                        title="Himanshu Sharma Resume"
+                                        onload="this.style.display='block'">
+                                    </iframe>
+                                `;
+                            } else {
+                                throw new Error('PDF not found');
+                            }
+                        })
+                        .catch(error => {
+                            container.innerHTML = `
+                                <div style="text-align: center; padding: 40px; color: #666;">
+                                    <p>PDF is being generated...</p>
+                                    <p>Please try refreshing the page in a few moments.</p>
+                                </div>
+                            `;
+                        });
+                });
+                
+                // Service Worker registration for PWA
+                if ('serviceWorker' in navigator) {
+                    window.addEventListener('load', function() {
+                        navigator.serviceWorker.register('/sw.js')
+                            .then(function(registration) {
+                                console.log('SW registered: ', registration);
+                            })
+                            .catch(function(registrationError) {
+                                console.log('SW registration failed: ', registrationError);
+                            });
+                    });
+                }
+            </script>
+        </body>
+        </html>
+        EOF
+        
+    - name: Create service worker
+      run: |
+        cat > sw.js << 'EOF'
+        const CACHE_NAME = 'resume-cache-v1';
+        const urlsToCache = [
+          '/',
+          '/index.html',
+          '/Himanshu_Resume.pdf',
+          '/manifest.json',
+          '/favicon.svg'
+        ];
+
+        self.addEventListener('install', function(event) {
+          event.waitUntil(
+            caches.open(CACHE_NAME)
+              .then(function(cache) {
+                return cache.addAll(urlsToCache);
+              })
+          );
+        });
+
+        self.addEventListener('fetch', function(event) {
+          event.respondWith(
+            caches.match(event.request)
+              .then(function(response) {
+                if (response) {
+                  return response;
+                }
+                return fetch(event.request);
+              }
+            )
+          );
+        });
+        EOF
+        
+    - name: Create _headers file
+      run: |
+        cat > _headers << 'EOF'
+        /*
+          X-Frame-Options: DENY
+          X-Content-Type-Options: nosniff
+          Referrer-Policy: strict-origin-when-cross-origin
+          Permissions-Policy: camera=(), microphone=(), geolocation=()
+          Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'
+
+        /index.html
+          Cache-Control: public, max-age=0, must-revalidate
+
+        /Himanshu_Resume.pdf
+          Cache-Control: public, max-age=3600, must-revalidate
+
+        /manifest.json
+          Cache-Control: public, max-age=86400, must-revalidate
+
+        /favicon.svg
+          Cache-Control: public, max-age=86400, must-revalidate
+
+        /sw.js
+          Cache-Control: public, max-age=0, must-revalidate
+        EOF
+        
+    - name: Create _redirects file
+      run: |
+        cat > _redirects << 'EOF'
+        # Redirects for Cloudflare Pages
+        /cv /Himanshu_Resume.pdf 301
+        /resume /Himanshu_Resume.pdf 301
+        /cv.pdf /Himanshu_Resume.pdf 301
+        /resume.pdf /Himanshu_Resume.pdf 301
+        EOF
+        
+    - name: Rename PDF
+      run: cp CV.pdf Himanshu_Resume.pdf
+        
+    - name: Commit and push changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add .
+        git commit -m "Auto-update resume [skip ci]"
+        git push 
